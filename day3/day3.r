@@ -13,3 +13,21 @@ day_3_part_1 <- function(input) {
 }
 
 day_3_part_1(input)
+
+day_3_part_2 <- function(input) {
+    total <- day_3_part_1(input)
+    void_matches <- gregexpr(
+        r"[don't\(\)((?!do\(\))(.|\s))*]",
+        input,
+        perl = TRUE
+    )
+    void_matches <- unlist(regmatches(input, void_matches))
+    total - sum(
+        sapply(
+            void_matches,
+            day_3_part_1
+        )
+    )
+}
+
+day_3_part_2(input)
